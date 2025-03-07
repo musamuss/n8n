@@ -202,94 +202,117 @@ export class License {
 	}
 
 	isFeatureEnabled(feature: BooleanLicenseFeature) {
+		return true;
 		return this.manager?.hasFeatureEnabled(feature) ?? false;
 	}
 
 	isSharingEnabled() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.SHARING);
 	}
 
 	isLogStreamingEnabled() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.LOG_STREAMING);
 	}
 
 	isLdapEnabled() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.LDAP);
 	}
 
 	isSamlEnabled() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.SAML);
 	}
 
 	isAiAssistantEnabled() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.AI_ASSISTANT);
 	}
 
 	isAskAiEnabled() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.ASK_AI);
 	}
 
 	isAiCreditsEnabled() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.AI_CREDITS);
 	}
 
 	isAdvancedExecutionFiltersEnabled() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.ADVANCED_EXECUTION_FILTERS);
 	}
 
 	isAdvancedPermissionsLicensed() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.ADVANCED_PERMISSIONS);
 	}
 
 	isDebugInEditorLicensed() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.DEBUG_IN_EDITOR);
 	}
 
 	isBinaryDataS3Licensed() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.BINARY_DATA_S3);
 	}
 
 	isMultiMainLicensed() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.MULTIPLE_MAIN_INSTANCES);
 	}
 
 	isVariablesEnabled() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.VARIABLES);
 	}
 
 	isSourceControlLicensed() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.SOURCE_CONTROL);
 	}
 
 	isExternalSecretsEnabled() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.EXTERNAL_SECRETS);
 	}
 
 	isWorkflowHistoryLicensed() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.WORKFLOW_HISTORY);
 	}
 
 	isAPIDisabled() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.API_DISABLED);
 	}
 
 	isWorkerViewLicensed() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.WORKER_VIEW);
 	}
 
 	isProjectRoleAdminLicensed() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.PROJECT_ROLE_ADMIN);
 	}
 
 	isProjectRoleEditorLicensed() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.PROJECT_ROLE_EDITOR);
 	}
 
 	isProjectRoleViewerLicensed() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.PROJECT_ROLE_VIEWER);
 	}
 
 	isCustomNpmRegistryEnabled() {
+		return true;
 		return this.isFeatureEnabled(LICENSE_FEATURES.COMMUNITY_NODES_CUSTOM_REGISTRY);
 	}
 

@@ -6,7 +6,39 @@ FROM --platform=linux/amd64 n8nio/base:${NODE_VERSION} AS builder
 # Build the application from source
 WORKDIR /src
 COPY . /src
-RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store --mount=type=cache,id=pnpm-metadata,target=/root/.cache/pnpm/metadata DOCKER_BUILD=true pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
+    --mount=type=cache,id=pnpm-metadata,target=/root/.cache/pnpm/metadata \
+    DOCKER_BUILD=true pnpm install --frozen-lockfile
+
+# Create the Turbo log directories for all packages
+RUN mkdir -p /src/packages/frontend/@n8n/chat/.turbo \
+            /src/packages/@n8n/imap/.turbo \
+            /src/packages/@n8n/client-oauth2/.turbo \
+            /src/packages/@n8n/benchmark/.turbo \
+            /src/packages/@n8n/di/.turbo \
+            /src/packages/@n8n/json-schema-to-zod/.turbo \
+            /src/packages/@n8n/permissions/.turbo \
+            /src/packages/@n8n/codemirror-lang/.turbo \
+            /src/packages/@n8n/composables/.turbo \
+            /src/packages/@n8n/utils/.turbo \
+            /src/packages/@n8n/api-types/.turbo \
+            /src/packages/@n8n/config/.turbo \
+            /src/packages/@n8n/design-system/.turbo \
+            /src/packages/@n8n/eslint-config/.turbo \
+            /src/packages/@n8n/n8n-nodes-langchain/.turbo \
+            /src/packages/@n8n/storybook/.turbo \
+            /src/packages/@n8n/task-runner/.turbo \
+            /src/packages/@n8n/typescript-config/.turbo \
+            /src/packages/@n8n/vitest-config/.turbo \
+            /src/packages/n8n-core/.turbo \
+            /src/packages/n8n-editor-ui/.turbo \
+            /src/packages/n8n-nodes-base/.turbo \
+            /src/packages/n8n-workflow/.turbo \
+            /src/packages/n8n/.turbo
+
+# Set permissions for all .turbo directories
+RUN find /src -name ".turbo" -type d -exec chmod -R 777 {} \;
+
 RUN pnpm build
 
 # Delete all dev dependencies
@@ -58,6 +90,6 @@ RUN \
 	mkdir .n8n && \
 	chown node:node .n8n
 
-ENV SHELL /bin/sh
+ENV SHELL=/bin/sh
 USER node
 ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
