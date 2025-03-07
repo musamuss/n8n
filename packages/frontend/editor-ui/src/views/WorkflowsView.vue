@@ -57,9 +57,8 @@ import { debounce } from 'lodash-es';
 import { useMessage } from '@/composables/useMessage';
 import { useToast } from '@/composables/useToast';
 import { useFoldersStore } from '@/stores/folders.store';
-import { useInsightsStore } from '@/features/insights/insights.store';
 import InsightsSummary from '@/features/insights/InsightsSummary.vue';
-import { useAsyncState } from '@vueuse/core';
+import { useInsights } from '@/features/insights/insights.composable';
 
 interface Filters extends BaseFilters {
 	status: string | boolean;
@@ -100,10 +99,7 @@ const foldersStore = useFoldersStore();
 const documentTitle = useDocumentTitle();
 const { callDebounced } = useDebounce();
 
-const insightsStore = useInsightsStore();
-const { state: summaries } = useAsyncState(insightsStore.fetchSummary, [], {
-	immediate: true,
-});
+const insights = useInsights();
 const isOverviewSubPage = computed(
 	() =>
 		route.name === VIEWS.WORKFLOWS ||
@@ -863,8 +859,9 @@ const createFolderInCurrent = async () => {
 		@sort="onSortUpdated"
 	>
 		<template #header>
+			{{}}
 			<ProjectHeader @create-folder="createFolderInCurrent">
-				<InsightsSummary v-if="isOverviewSubPage" :summaries="summaries" />
+				<InsightsSummary v-if="isOverviewSubPage" :summaries="insights.tabs" />
 			</ProjectHeader>
 		</template>
 		<template v-if="showFolders" #add-button>

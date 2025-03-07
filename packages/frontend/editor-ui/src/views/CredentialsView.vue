@@ -32,9 +32,8 @@ import { N8nCheckbox } from '@n8n/design-system';
 import { pickBy } from 'lodash-es';
 import { CREDENTIAL_EMPTY_VALUE } from 'n8n-workflow';
 import { isCredentialsResource } from '@/utils/typeGuards';
-import { useInsightsStore } from '@/features/insights/insights.store';
 import InsightsSummary from '@/features/insights/InsightsSummary.vue';
-import { useAsyncState } from '@vueuse/core';
+import { useInsights } from '@/features/insights/insights.composable';
 
 const props = defineProps<{
 	credentialId?: string;
@@ -54,10 +53,7 @@ const router = useRouter();
 const telemetry = useTelemetry();
 const i18n = useI18n();
 
-const insightsStore = useInsightsStore();
-const { state: summaries } = useAsyncState(insightsStore.fetchSummary, [], {
-	immediate: true,
-});
+const insights = useInsights();
 const isOverviewSubPage = computed(
 	() =>
 		route.name === VIEWS.WORKFLOWS ||
@@ -252,7 +248,7 @@ onMounted(() => {
 	>
 		<template #header>
 			<ProjectHeader>
-				<InsightsSummary v-if="isOverviewSubPage" :summaries="summaries" />
+				<InsightsSummary v-if="isOverviewSubPage" :summaries="insights.tabs" />
 			</ProjectHeader>
 		</template>
 		<template #default="{ data }">

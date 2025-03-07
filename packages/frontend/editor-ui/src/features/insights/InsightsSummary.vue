@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { RouteLocationRaw } from 'vue-router';
 import { useI18n } from '@/composables/useI18n';
 
 type Summary = {
@@ -8,6 +9,7 @@ type Summary = {
 	sign?: string;
 	deviation: number;
 	evaluation?: 'positive' | 'negative';
+	to: RouteLocationRaw;
 };
 defineProps<{
 	summaries: Summary[];
@@ -24,8 +26,8 @@ const getSign = (count: number) => (count > 0 ? '+' : undefined);
 			i18n.baseText('insights.banner.title', { interpolate: { count: 7 } })
 		}}</N8nHeading>
 		<ul>
-			<li v-for="{ id, title, count, sign, deviation, evaluation } in summaries" :key="id">
-				<p>
+			<li v-for="{ id, title, count, sign, deviation, evaluation, to } in summaries" :key="id">
+				<RouterLink class="insight-summary" :to="to" exact-active-class="insight-summary--active">
 					<strong>{{ title }}</strong>
 					<span v-if="count === 0 && id === 'timeSaved'" :class="$style.empty">
 						<em>--</em>
@@ -57,7 +59,7 @@ const getSign = (count: number) => (count > 0 ? '+' : undefined);
 							{{ getSign(deviation) }} {{ deviation }}
 						</small>
 					</span>
-				</p>
+				</RouterLink>
 			</li>
 		</ul>
 	</div>
@@ -85,7 +87,7 @@ const getSign = (count: number) => (count > 0 ? '+' : undefined);
 			padding: 0 var(--spacing-xl) 0 var(--spacing-l);
 		}
 
-		p {
+		a {
 			display: grid;
 
 			strong {

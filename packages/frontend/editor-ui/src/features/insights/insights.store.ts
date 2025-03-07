@@ -67,14 +67,6 @@ export const useInsightsStore = defineStore('insights', () => {
 				evaluation: 'negative' as const,
 			},
 			{
-				id: 'timeSaved',
-				title: 'Time saved',
-				count: 0,
-				deviation: 0,
-				sign: 'h',
-				evaluation: 'negative' as const,
-			},
-			{
 				id: 'runTime',
 				title: 'Avg. run time',
 				count: 2.5,

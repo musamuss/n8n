@@ -18,9 +18,8 @@ import { useSettingsStore } from '@/stores/settings.store';
 import ProjectHeader from '@/components/Projects/ProjectHeader.vue';
 import ConcurrentExecutionsHeader from '@/components/executions/ConcurrentExecutionsHeader.vue';
 import { usePageRedirectionHelper } from '@/composables/usePageRedirectionHelper';
-import { useInsightsStore } from '@/features/insights/insights.store';
 import InsightsSummary from '@/features/insights/InsightsSummary.vue';
-import { useAsyncState } from '@vueuse/core';
+import { useInsights } from '@/features/insights/insights.composable';
 
 const props = withDefaults(
 	defineProps<{
@@ -56,10 +55,7 @@ const selectedItems = ref<Record<string, boolean>>({});
 const message = useMessage();
 const toast = useToast();
 
-const insightsStore = useInsightsStore();
-const { state: summaries } = useAsyncState(insightsStore.fetchSummary, [], {
-	immediate: true,
-});
+const insights = useInsights();
 const isOverviewSubPage = computed(
 	() =>
 		route.name === VIEWS.WORKFLOWS ||
@@ -353,7 +349,7 @@ const goToUpgrade = () => {
 <template>
 	<div :class="$style.execListWrapper">
 		<ProjectHeader>
-			<InsightsSummary v-if="isOverviewSubPage" :summaries="summaries" />
+			<InsightsSummary v-if="isOverviewSubPage" :summaries="insights.tabs" />
 		</ProjectHeader>
 		<div :class="$style.execList">
 			<div :class="$style.execListHeader">
